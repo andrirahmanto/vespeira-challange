@@ -87,56 +87,59 @@ class LoginPage extends GetView<LoginController> {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  TextFormField(
-                    keyboardType: TextInputType.phone,
-                    textAlign: TextAlign.start,
-                    style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: gray900),
-                    cursorColor: primary,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide:
-                            const BorderSide(color: gray200, width: 1.5),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide:
-                            const BorderSide(color: gray200, width: 1.5),
-                      ),
-                      fillColor: white,
-                      filled: true,
-                      hintText: 'Phone Number',
-                      prefixIcon: const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 14.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SizedBox(width: 6),
-                            Text(
-                              '+62',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: gray900),
+                  Obx(() => TextFormField(
+                        keyboardType: TextInputType.phone,
+                        textAlign: TextAlign.start,
+                        style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: gray900),
+                        cursorColor: primary,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide:
+                                const BorderSide(color: gray200, width: 1.5),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide:
+                                const BorderSide(color: gray200, width: 1.5),
+                          ),
+                          fillColor: white,
+                          filled: true,
+                          hintText: 'Phone Number',
+                          errorText: controller.errorPhone.value == ''
+                              ? null
+                              : controller.errorPhone.value,
+                          prefixIcon: const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 14.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SizedBox(width: 6),
+                                Text(
+                                  '+62',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: gray900),
+                                ),
+                                SizedBox(width: 12),
+                                SizedBox(
+                                  width: 1.5,
+                                  height: 48,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(color: gray100),
+                                  ),
+                                ),
+                              ],
                             ),
-                            SizedBox(width: 12),
-                            SizedBox(
-                              width: 1.5,
-                              height: 48,
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(color: gray100),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                    controller: controller.etPhone,
-                  ),
+                        controller: controller.etPhone,
+                      )),
                 ],
               ),
               const SizedBox(height: 24),
