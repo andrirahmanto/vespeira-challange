@@ -9,6 +9,9 @@ class LoginController extends GetxController {
   final UserRepository _userRepository;
   final isObscure = true.obs;
 
+  final errorPhone = ''.obs;
+  final errorPass = ''.obs;
+
   LoginController({
     required UserRepository userRepository,
   }) : _userRepository = userRepository;
@@ -20,7 +23,21 @@ class LoginController extends GetxController {
     isObscure.value = !isObscure.value;
   }
 
+  void inputCheck() {
+    if (etPhone.text.length < 8 && etPhone.text.length > 16) {
+      errorPhone.value = 'Nomor telepon harus 8-16 karakter';
+    } else {
+      errorPhone.value = '';
+    }
+    if (etPassword.text.length < 8) {
+      errorPass.value = 'Password harus lebih dari 7';
+    } else {
+      errorPass.value = '';
+    }
+  }
+
   void doLogin() async {
+    inputCheck();
     if (etPhone.text != '85173254399' || etPassword.text != '12345678') {
       SnackbarWidget.showFailedSnackbar('Email atau password salah');
       return;

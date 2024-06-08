@@ -196,6 +196,9 @@ class LoginPage extends GetView<LoginController> {
                           fillColor: white,
                           filled: true,
                           hintText: 'Password',
+                          errorText: controller.errorPass.value == ''
+                              ? null
+                              : controller.errorPass.value,
                           prefixIcon: const Padding(
                             padding: EdgeInsets.all(14.0),
                             child: ImageIcon(
