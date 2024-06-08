@@ -7,6 +7,7 @@ import '../../../widgets/snackbar_widget.dart';
 
 class LoginController extends GetxController {
   final UserRepository _userRepository;
+  final isObscure = true.obs;
 
   LoginController({
     required UserRepository userRepository,
@@ -14,6 +15,10 @@ class LoginController extends GetxController {
 
   final etPhone = TextEditingController();
   final etPassword = TextEditingController();
+
+  void togglePasswordVisibility() {
+    isObscure.value = !isObscure.value;
+  }
 
   void doLogin() async {
     if (etPhone.text != '85173254399' || etPassword.text != '12345678') {
