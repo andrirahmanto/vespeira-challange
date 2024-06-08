@@ -235,18 +235,21 @@ class LoginPage extends GetView<LoginController> {
   }
 
   Widget loginButton() => SizedBox(
-      height: 52,
-      width: double.infinity,
-      child: SizedBox(
         height: 52,
         width: double.infinity,
-        child: ButtonIcon(
-          buttonColor: primary,
-          textColor: white,
-          textLabel: "Sign In",
-          onClick: () {
-            controller.doLogin();
-          },
+        child: SizedBox(
+          height: 52,
+          width: double.infinity,
+          child: Obx(
+            () => ButtonIcon(
+              buttonColor: controller.isLoading.value ? gray200 : primary,
+              textColor: white,
+              textLabel: "Sign In",
+              onClick: () {
+                controller.isLoading.value ? null : controller.doLogin();
+              },
+            ),
+          ),
         ),
-      ));
+      );
 }

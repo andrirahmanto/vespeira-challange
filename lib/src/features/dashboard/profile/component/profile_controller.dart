@@ -8,6 +8,8 @@ import '../../../../widgets/snackbar_widget.dart';
 class ProfileController extends GetxController {
   final UserRepository _userRepository;
 
+  final isLoading = false.obs;
+
   final _name = "".obs;
 
   String get name => _name.value;
@@ -61,16 +63,16 @@ class ProfileController extends GetxController {
     await _userRepository.testUnauthenticated();
   }
 
-  onDownloadFileClick() async {
+  onDownloadFileClick() async {}
 
-  }
-
-  onOpenWebPageClick() {
-
-  }
+  onOpenWebPageClick() {}
 
   void doLogout() async {
+    isLoading.value = true;
+    //TODO: Delete this delay after finish
+    await Future.delayed(const Duration(seconds: 1));
     await _userRepository.logout();
+    isLoading.value = false;
     Get.offAllNamed(RouteName.login);
   }
 }
