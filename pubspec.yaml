@@ -1,7 +1,7 @@
 name: entrance_test
 description: A new Flutter project.
 publish_to: 'none'
-version: 0.1.0
+version: 18.1.20+31
 
 environment:
   sdk: '>=3.0.6 <4.0.0'
@@ -14,6 +14,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_launcher_icons: ^0.13.1
   get: ^4.6.6
   get_storage: ^2.1.1
   intl: ^0.19.0
@@ -23,6 +24,22 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/icon_vesperia.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/icons/icon_vesperia.png"
+  windows:
+    generate: true
+    image_path: "assets/icons/icon_vesperia.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/icons/icon_vesperia.png"
 
 flutter:
   uses-material-design: true

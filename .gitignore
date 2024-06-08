@@ -42,3 +42,12 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# FVM Version Cache
+.fvm
+.fvmrc
+docs/.next
+
+# Ignore fvm binary
+fvm
+.env.local
