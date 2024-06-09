@@ -89,7 +89,9 @@ class ProfileController extends GetxController {
     }
   }
 
-  onOpenWebPageClick() async {}
+  onOpenWebPageClick() async {
+    Get.toNamed(RouteName.webView);
+  }
 
   void doLogout() async {
     isLoading.value = true;
