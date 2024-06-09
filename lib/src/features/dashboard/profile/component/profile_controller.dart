@@ -1,5 +1,10 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:entrance_test/src/repositories/user_repository.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../../app/routes/route_name.dart';
 import '../../../../utils/networking_util.dart';
@@ -63,9 +68,28 @@ class ProfileController extends GetxController {
     await _userRepository.testUnauthenticated();
   }
 
-  onDownloadFileClick() async {}
+  onDownloadFileClick() async {
+    final status = await Permission.storage.request();
+    if (status.isGranted) {
+      final dio = Dio();
+      final dir = await getApplicationDocumentsDirectory();
+      final file = File('${dir.path}/flutter_tutorial.pdf');
+      dio.download(
+          'https://www.tutorialspoint.com/flutter/flutter_tutorial.pdf',
+          file.path);
+      if (await file.exists()) {
+        // File has been downloaded
+        SnackbarWidget.showSuccessSnackbar('File downloaded successfully');
+      } else {
+        // File has not been downloaded
+        SnackbarWidget.showFailedSnackbar('File download failed');
+      }
+    } else {
+      SnackbarWidget.showFailedSnackbar('Permission denied');
+    }
+  }
 
-  onOpenWebPageClick() {}
+  onOpenWebPageClick() async {}
 
   void doLogout() async {
     isLoading.value = true;
