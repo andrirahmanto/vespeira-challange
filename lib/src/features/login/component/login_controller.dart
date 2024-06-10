@@ -56,19 +56,21 @@ class LoginController extends GetxController {
   }
 
   void doLogin() async {
-    inputCheck();
-    if (errorPhone.value != '' || errorPass.value != '') {
-      return;
-    }
-    if (etPhone.text != '85173254399' || etPassword.text != '12345678') {
+    try {
+      inputCheck();
+      if (errorPhone.value != '' || errorPass.value != '') {
+        return;
+      }
+      isLoading.value = true;
+      await _userRepository.login(
+          phoneNumber: etPhone.text,
+          password: etPassword.text,
+          countryCode: '62');
+      isLoading.value = false;
+      Get.offAllNamed(RouteName.dashboard);
+    } catch (e) {
+      isLoading.value = false;
       SnackbarWidget.showFailedSnackbar('Email atau password salah');
-      return;
     }
-    isLoading.value = true;
-    // TODO: Delete this delay after finish
-    await Future.delayed(const Duration(seconds: 1));
-    await _userRepository.login();
-    isLoading.value = false;
-    Get.offAllNamed(RouteName.dashboard);
   }
 }

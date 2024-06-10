@@ -1,5 +1,11 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:entrance_test/src/constants/local_data_key.dart';
+import 'package:entrance_test/src/models/response/error_response_model.dart';
+import 'package:entrance_test/src/models/response/login_response_model.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '../constants/endpoint.dart';
@@ -14,18 +20,39 @@ class UserRepository {
       : _client = client,
         _local = local;
 
-  Future<void> login() async {
-    //Artificial delay to simulate logging in process
-    await Future.delayed(const Duration(seconds: 2));
-    //Placeholder token. DO NOT call real logout API using this token
-    _local.write(
-        LocalDataKey.token, "621|DBiUBMfsEtX01tbdu4duNRCNMTt7PV5blr6zxTvq");
+  Future<void> login(
+      {required String phoneNumber,
+      required String password,
+      required String countryCode}) async {
+    try {
+      final response = await _client.post(
+        Endpoint.signin,
+        data: {
+          "phone_number": phoneNumber,
+          "password": password,
+          "country_code": countryCode,
+        },
+      );
+      final loginResponseModel = LoginResponseModel.fromJson(response.data);
+      _local.write(LocalDataKey.token, loginResponseModel.token);
+      return;
+    } on DioException catch (_) {
+      rethrow;
+    }
   }
 
   Future<void> logout() async {
-    //Artificial delay to simulate logging out process
-    await Future.delayed(const Duration(seconds: 2));
-    await _local.remove(LocalDataKey.token);
+    try {
+      await _client.post(
+        Endpoint.signout,
+        options: NetworkingUtil.setupNetworkOptions(
+            'Bearer ${_local.read(LocalDataKey.token)}'),
+      );
+      await _local.remove(LocalDataKey.token);
+      return;
+    } on DioException catch (_) {
+      rethrow;
+    }
   }
 
   Future<UserResponseModel> getUser() async {

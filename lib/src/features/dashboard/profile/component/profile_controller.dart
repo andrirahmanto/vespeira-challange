@@ -95,8 +95,6 @@ class ProfileController extends GetxController {
 
   void doLogout() async {
     isLoading.value = true;
-    //TODO: Delete this delay after finish
-    await Future.delayed(const Duration(seconds: 1));
     await _userRepository.logout();
     isLoading.value = false;
     Get.offAllNamed(RouteName.login);
