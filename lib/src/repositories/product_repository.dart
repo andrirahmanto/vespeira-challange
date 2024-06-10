@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:entrance_test/app/routes/route_name.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '../constants/endpoint.dart';
@@ -13,7 +15,20 @@ class ProductRepository {
 
   ProductRepository({required Dio client, required GetStorage local})
       : _client = client,
-        _local = local;
+        _local = local {
+    _client.interceptors.add(
+      InterceptorsWrapper(
+        onError: (error, handler) {
+          if (error.response?.statusCode == 401) {
+            _local.remove(LocalDataKey.token);
+            Get.offAllNamed(RouteName.login);
+            return;
+          }
+          return handler.next(error);
+        },
+      ),
+    );
+  }
 
   Future<ProductListResponseModel> getProductList(
       ProductListRequestModel request) async {

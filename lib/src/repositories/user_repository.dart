@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:dio/dio.dart';
+import 'package:entrance_test/app/routes/route_name.dart';
 import 'package:entrance_test/src/constants/local_data_key.dart';
 import 'package:entrance_test/src/models/response/error_response_model.dart';
 import 'package:entrance_test/src/models/response/login_response_model.dart';
@@ -18,7 +19,20 @@ class UserRepository {
 
   UserRepository({required Dio client, required GetStorage local})
       : _client = client,
-        _local = local;
+        _local = local {
+    _client.interceptors.add(
+      InterceptorsWrapper(
+        onError: (error, handler) {
+          if (error.response?.statusCode == 401) {
+            _local.remove(LocalDataKey.token);
+            Get.offAllNamed(RouteName.login);
+            return;
+          }
+          return handler.next(error);
+        },
+      ),
+    );
+  }
 
   Future<void> login(
       {required String phoneNumber,
@@ -53,6 +67,10 @@ class UserRepository {
     } on DioException catch (_) {
       rethrow;
     }
+  }
+
+  bool isTokenExist() {
+    return _local.read(LocalDataKey.token) != null;
   }
 
   Future<UserResponseModel> getUser() async {
