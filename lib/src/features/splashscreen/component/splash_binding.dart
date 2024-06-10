@@ -8,6 +8,10 @@ import 'splash_controller.dart';
 class SplashBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(SplashController());
+    Get.put(UserRepository(
+      client: Get.find<Dio>(),
+      local: Get.find<GetStorage>(),
+    ));
+    Get.put(SplashController(userRepository: Get.find<UserRepository>()));
   }
 }

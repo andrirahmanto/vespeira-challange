@@ -1,4 +1,6 @@
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 
@@ -112,19 +114,35 @@ class LoginPage extends GetView<LoginController> {
                           errorText: controller.errorPhone.value == ''
                               ? null
                               : controller.errorPhone.value,
-                          prefixIcon: const Padding(
+                          prefixIcon: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 14.0),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 SizedBox(width: 6),
-                                Text(
-                                  '+62',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: gray900),
+                                GestureDetector(
+                                  onTap: () {
+                                    showCountryPicker(
+                                      context: context,
+                                      showPhoneCode:
+                                          true, // optional. Shows phone code before the country name.
+                                      onSelect: (Country country) {
+                                        controller.changePhoneCode(
+                                          country.phoneCode,
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Obx(
+                                    () => Text(
+                                      '+${controller.etPhoneCode.value}',
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: gray900),
+                                    ),
+                                  ),
                                 ),
                                 SizedBox(width: 12),
                                 SizedBox(

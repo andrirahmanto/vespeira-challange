@@ -14,6 +14,7 @@ class LoginController extends GetxController {
   // TODO: Delete this dummy data after finish
   final etPhone = TextEditingController(text: '85173254399');
   final etPassword = TextEditingController(text: '12345678');
+  final etPhoneCode = '62'.obs;
 
   final errorPhone = ''.obs;
   final errorPass = ''.obs;
@@ -42,6 +43,10 @@ class LoginController extends GetxController {
     errorPhone.value = '';
   }
 
+  void changePhoneCode(String code) {
+    etPhoneCode.value = code;
+  }
+
   void passwordCheck() {
     if (etPassword.text.length < 8) {
       errorPass.value = 'Password harus lebih dari 7';
@@ -65,12 +70,12 @@ class LoginController extends GetxController {
       await _userRepository.login(
           phoneNumber: etPhone.text,
           password: etPassword.text,
-          countryCode: '62');
+          countryCode: etPhoneCode.value);
       isLoading.value = false;
       Get.offAllNamed(RouteName.dashboard);
     } catch (e) {
       isLoading.value = false;
-      SnackbarWidget.showFailedSnackbar('Email atau password salah');
+      SnackbarWidget.showFailedSnackbar('Nomer atau password salah');
     }
   }
 }
