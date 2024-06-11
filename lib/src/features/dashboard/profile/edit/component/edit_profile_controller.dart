@@ -1,3 +1,4 @@
+import 'package:entrance_test/src/features/dashboard/profile/component/profile_controller.dart';
 import 'package:entrance_test/src/repositories/user_repository.dart';
 import 'package:entrance_test/src/utils/string_ext.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,10 @@ class EditProfileController extends GetxController {
   EditProfileController({
     required UserRepository userRepository,
   }) : _userRepository = userRepository;
+
+  final _isLoading = false.obs;
+
+  bool get isLoading => _isLoading.value;
 
   final etFullName = TextEditingController();
   final etPhoneNumber = TextEditingController();
@@ -42,6 +47,26 @@ class EditProfileController extends GetxController {
   bool get isGenderFemale => _isGenderFemale.value;
 
   DateTime birthDate = DateTime.now();
+
+  final _errorFullName = ''.obs;
+
+  String get errorFullName => _errorFullName.value;
+
+  final _errorEmail = ''.obs;
+
+  String get errorEmail => _errorEmail.value;
+
+  final _errorHeight = ''.obs;
+
+  String get errorHeight => _errorHeight.value;
+
+  final _errorWeight = ''.obs;
+
+  String get errorWeight => _errorWeight.value;
+
+  final _errorBirthDate = ''.obs;
+
+  String get errorBirthDate => _errorBirthDate.value;
 
   @override
   void onInit() {
@@ -74,7 +99,8 @@ class EditProfileController extends GetxController {
 
         etBirthDate.text = '';
         if (localUser.dateOfBirth.isNullOrEmpty == false) {
-          birthDate = DateUtil.getDateFromShortServerFormat(localUser.dateOfBirth!);
+          birthDate =
+              DateUtil.getDateFromShortServerFormat(localUser.dateOfBirth!);
           etBirthDate.text = DateUtil.getBirthDate(birthDate);
         }
       } else {
@@ -104,7 +130,92 @@ class EditProfileController extends GetxController {
     etBirthDate.text = DateUtil.getBirthDate(birthDate);
   }
 
+  void checkFullname() {
+    if (etFullName.text.isNullOrEmpty) {
+      _errorFullName.value = 'Nama tidak boleh kosong';
+      return;
+    }
+    _errorFullName.value = '';
+  }
+
+  void checkEmail() {
+    if (etEmail.text.isNullOrEmpty) {
+      _errorEmail.value = 'Email tidak boleh kosong';
+      return;
+    }
+    if (!RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+        .hasMatch(etEmail.text)) {
+      _errorEmail.value = 'Email tidak valid';
+      return;
+    }
+    _errorEmail.value = '';
+  }
+
+  void checkHeight() {
+    if (etHeight.text.isNullOrEmpty) {
+      _errorHeight.value = 'Height tidak boleh kosong';
+      return;
+    }
+    if (int.parse(etHeight.text) < 0) {
+      _errorHeight.value = 'Height tidak boleh < 0';
+      return;
+    }
+    _errorHeight.value = '';
+  }
+
+  void checkWeight() {
+    if (etWeight.text.isNullOrEmpty) {
+      _errorWeight.value = 'Weight tidak boleh kosong';
+      return;
+    }
+    if (int.parse(etWeight.text) < 0) {
+      _errorWeight.value = 'Weight tidak boleh < 0';
+      return;
+    }
+    _errorWeight.value = '';
+  }
+
+  void checkBirthDate() {
+    if (etBirthDate.text.isNullOrEmpty) {
+      _errorBirthDate.value = 'Tanggal lahir tidak boleh kosong';
+      return;
+    }
+    try {
+      DateUtil.getBirthDateFromString(etBirthDate.text);
+    } catch (e) {
+      _errorBirthDate.value = 'Tanggal lahir tidak valid';
+      return;
+    }
+    _errorBirthDate.value = '';
+  }
+
+  bool isDataValid() {
+    checkFullname();
+    checkEmail();
+    checkHeight();
+    checkWeight();
+    checkBirthDate();
+
+    return errorFullName.isNullOrEmpty &&
+        errorEmail.isNullOrEmpty &&
+        errorHeight.isNullOrEmpty &&
+        errorWeight.isNullOrEmpty &&
+        errorBirthDate.isNullOrEmpty;
+  }
+
   void saveData() async {
-    //TODO: Implement edit user API
+    _isLoading.value = true;
+    await _userRepository.updateUser(
+      name: etFullName.text,
+      email: etEmail.text,
+      gender: gender,
+      dateOfBirth: DateUtil.changeFormatToShort(etBirthDate.text),
+      height: int.parse(etHeight.text),
+      weight: int.parse(etWeight.text),
+    );
+    SnackbarWidget.showSuccessSnackbar('Berhasil update data');
+    loadUserFromServer();
+    Get.find<ProfileController>().loadUserFromServer();
+    _isLoading.value = false;
   }
 }

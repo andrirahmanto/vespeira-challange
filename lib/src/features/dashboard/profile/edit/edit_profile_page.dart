@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:entrance_test/src/constants/image.dart';
+import 'package:entrance_test/src/utils/string_ext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -128,37 +129,41 @@ class EditProfilePage extends GetView<EditProfileController> {
                       ],
                     ),
                     const SizedBox(height: 8),
-                    TextFormField(
-                      keyboardType: TextInputType.name,
-                      textAlign: TextAlign.start,
-                      style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: gray900),
-                      cursorColor: primary,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide:
-                              const BorderSide(color: gray200, width: 1.5),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide:
-                              const BorderSide(color: gray200, width: 1.5),
-                        ),
-                        fillColor: white,
-                        filled: true,
-                        hintText: 'Full Name',
-                        prefixIcon: const Padding(
-                          padding: EdgeInsets.all(14.0),
-                          child: ImageIcon(
-                            AssetImage(ic_user),
-                          ), // icon is 48px widget.
-                        ),
-                      ),
-                      controller: controller.etFullName,
-                    ),
+                    Obx(() => TextFormField(
+                          keyboardType: TextInputType.name,
+                          textAlign: TextAlign.start,
+                          style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: gray900),
+                          cursorColor: primary,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide:
+                                  const BorderSide(color: gray200, width: 1.5),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide:
+                                  const BorderSide(color: gray200, width: 1.5),
+                            ),
+                            fillColor: white,
+                            filled: true,
+                            hintText: 'Full Name',
+                            errorText: controller.errorFullName.isNullOrEmpty
+                                ? null
+                                : controller.errorFullName,
+                            prefixIcon: const Padding(
+                              padding: EdgeInsets.all(14.0),
+                              child: ImageIcon(
+                                AssetImage(ic_user),
+                              ), // icon is 48px widget.
+                            ),
+                          ),
+                          controller: controller.etFullName,
+                          onChanged: (_) => controller.checkFullname(),
+                        )),
                   ],
                 ),
                 const SizedBox(height: 24),
@@ -270,37 +275,41 @@ class EditProfilePage extends GetView<EditProfileController> {
                       ],
                     ),
                     const SizedBox(height: 8),
-                    TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      textAlign: TextAlign.start,
-                      style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: gray900),
-                      cursorColor: primary,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide:
-                              const BorderSide(color: gray200, width: 1.5),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide:
-                              const BorderSide(color: gray200, width: 1.5),
-                        ),
-                        fillColor: white,
-                        filled: true,
-                        hintText: 'Email',
-                        prefixIcon: const Padding(
-                          padding: EdgeInsets.all(14.0),
-                          child: ImageIcon(
-                            AssetImage(ic_mail),
-                          ), // icon is 48px widget.
-                        ),
-                      ),
-                      controller: controller.etEmail,
-                    ),
+                    Obx(() => TextFormField(
+                          keyboardType: TextInputType.emailAddress,
+                          textAlign: TextAlign.start,
+                          style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: gray900),
+                          cursorColor: primary,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide:
+                                  const BorderSide(color: gray200, width: 1.5),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide:
+                                  const BorderSide(color: gray200, width: 1.5),
+                            ),
+                            fillColor: white,
+                            filled: true,
+                            hintText: 'Email',
+                            errorText: controller.errorEmail.isNullOrEmpty
+                                ? null
+                                : controller.errorEmail,
+                            prefixIcon: const Padding(
+                              padding: EdgeInsets.all(14.0),
+                              child: ImageIcon(
+                                AssetImage(ic_mail),
+                              ), // icon is 48px widget.
+                            ),
+                          ),
+                          controller: controller.etEmail,
+                          onChanged: (_) => controller.checkEmail(),
+                        )),
                   ],
                 ),
                 const SizedBox(height: 24),
@@ -361,32 +370,39 @@ class EditProfilePage extends GetView<EditProfileController> {
                             ],
                           ),
                           const SizedBox(height: 8),
-                          TextFormField(
-                            keyboardType: const TextInputType.numberWithOptions(
-                                signed: false, decimal: false),
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: gray900),
-                            cursorColor: primary,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                                borderSide: const BorderSide(
-                                    color: gray200, width: 1.5),
+                          Obx(
+                            () => TextFormField(
+                              keyboardType:
+                                  const TextInputType.numberWithOptions(
+                                      signed: false, decimal: false),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: gray900),
+                              cursorColor: primary,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderSide: const BorderSide(
+                                      color: gray200, width: 1.5),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderSide: const BorderSide(
+                                      color: gray200, width: 1.5),
+                                ),
+                                fillColor: white,
+                                filled: true,
+                                hintText: 'Height',
+                                errorText: controller.errorHeight.isNullOrEmpty
+                                    ? null
+                                    : controller.errorHeight,
+                                suffixText: 'cm',
                               ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                                borderSide: const BorderSide(
-                                    color: gray200, width: 1.5),
-                              ),
-                              fillColor: white,
-                              filled: true,
-                              hintText: 'Height',
-                              suffixText: 'cm',
+                              controller: controller.etHeight,
+                              onChanged: (value) => controller.checkHeight(),
                             ),
-                            controller: controller.etHeight,
                           ),
                         ],
                       ),
@@ -416,33 +432,39 @@ class EditProfilePage extends GetView<EditProfileController> {
                             ],
                           ),
                           const SizedBox(height: 8),
-                          TextFormField(
-                            keyboardType: const TextInputType.numberWithOptions(
-                                signed: false, decimal: false),
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: gray900),
-                            cursorColor: primary,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                                borderSide: const BorderSide(
-                                    color: gray200, width: 1.5),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                                borderSide: const BorderSide(
-                                    color: gray200, width: 1.5),
-                              ),
-                              fillColor: white,
-                              filled: true,
-                              hintText: 'Weight',
-                              suffixText: 'kg',
-                            ),
-                            controller: controller.etWeight,
-                          ),
+                          Obx(() => TextFormField(
+                                keyboardType:
+                                    const TextInputType.numberWithOptions(
+                                        signed: false, decimal: false),
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: gray900),
+                                cursorColor: primary,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    borderSide: const BorderSide(
+                                        color: gray200, width: 1.5),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    borderSide: const BorderSide(
+                                        color: gray200, width: 1.5),
+                                  ),
+                                  fillColor: white,
+                                  filled: true,
+                                  hintText: 'Weight',
+                                  errorText:
+                                      controller.errorWeight.isNullOrEmpty
+                                          ? null
+                                          : controller.errorWeight,
+                                  suffixText: 'kg',
+                                ),
+                                controller: controller.etWeight,
+                                onChanged: (value) => controller.checkWeight(),
+                              )),
                         ],
                       ),
                     ),
@@ -472,64 +494,68 @@ class EditProfilePage extends GetView<EditProfileController> {
                       ],
                     ),
                     const SizedBox(height: 8),
-                    TextFormField(
-                      keyboardType: TextInputType.none,
-                      textAlign: TextAlign.start,
-                      style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: gray900),
-                      cursorColor: primary,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide:
-                              const BorderSide(color: gray200, width: 1.5),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide:
-                              const BorderSide(color: gray200, width: 1.5),
-                        ),
-                        fillColor: white,
-                        filled: true,
-                        hintText: 'Birthdate',
-                        prefixIcon: const Padding(
-                          padding: EdgeInsets.all(14.0),
-                          child: ImageIcon(
-                            AssetImage(ic_calendar),
-                          ), // icon is 48px widget.
-                        ),
-                      ),
-                      controller: controller.etBirthDate,
-                      onTap: () {
-                        showDatePicker(
-                          context: context,
-                          initialDate: controller.birthDate,
-                          firstDate: DateTime(1920, 1),
-                          lastDate: DateTime.now(),
-                        ).then((pickedDate) {
-                          if (pickedDate != null) {
-                            controller.onChangeBirthDate(pickedDate);
-                          }
-                        });
-                      },
-                    ),
+                    Obx(() => TextFormField(
+                          keyboardType: TextInputType.none,
+                          textAlign: TextAlign.start,
+                          style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: gray900),
+                          cursorColor: primary,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide:
+                                  const BorderSide(color: gray200, width: 1.5),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide:
+                                  const BorderSide(color: gray200, width: 1.5),
+                            ),
+                            fillColor: white,
+                            filled: true,
+                            hintText: 'Birthdate',
+                            errorText: controller.errorBirthDate.isNullOrEmpty
+                                ? null
+                                : controller.errorBirthDate,
+                            prefixIcon: const Padding(
+                              padding: EdgeInsets.all(14.0),
+                              child: ImageIcon(
+                                AssetImage(ic_calendar),
+                              ), // icon is 48px widget.
+                            ),
+                          ),
+                          controller: controller.etBirthDate,
+                          onChanged: (_) => controller.checkBirthDate(),
+                          onTap: () {
+                            showDatePicker(
+                              context: context,
+                              initialDate: controller.birthDate,
+                              firstDate: DateTime(1920, 1),
+                              lastDate: DateTime.now(),
+                            ).then((pickedDate) {
+                              if (pickedDate != null) {
+                                controller.onChangeBirthDate(pickedDate);
+                              }
+                            });
+                          },
+                        )),
                   ],
                 ),
                 const SizedBox(height: 24),
-                SizedBox(
-                  height: 52,
-                  width: double.infinity,
-                  child: ButtonIcon(
-                    buttonColor: primary,
-                    textColor: white,
-                    textLabel: "Save Changes",
-                    onClick: () {
-                      controller.saveData();
-                    },
-                  ),
-                ),
+                Obx(() => SizedBox(
+                      height: 52,
+                      width: double.infinity,
+                      child: ButtonIcon(
+                        buttonColor: controller.isLoading ? gray200 : primary,
+                        textColor: white,
+                        textLabel: "Save Changes",
+                        onClick: () {
+                          controller.isLoading ? null : controller.saveData();
+                        },
+                      ),
+                    )),
                 const SizedBox(height: 24),
               ],
             ),

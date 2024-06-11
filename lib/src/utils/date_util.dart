@@ -22,6 +22,17 @@ class DateUtil {
   static String getBirthDate(DateTime date) =>
       DateFormat("dd MMMM yyyy", "en_EN").format(date.toLocal());
 
+  static DateTime getBirthDateFromString(String date) =>
+      DateFormat("dd MMMM yyyy", "en_EN").parse(date);
+
+  static String changeFormatToShort(String originalDate) {
+    DateFormat originalFormat = DateFormat("dd MMMM yyyy", "id_ID");
+    DateTime dateTime = originalFormat.parse(originalDate);
+    DateFormat targetFormat = DateFormat("yyyy-MM-dd");
+    String targetDate = targetFormat.format(dateTime);
+    return targetDate;
+  }
+
   static String getTimeAgo(DateTime date) {
     var time = date.millisecondsSinceEpoch;
     if (time < 1000000000000) {

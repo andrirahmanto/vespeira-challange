@@ -87,6 +87,40 @@ class UserRepository {
     }
   }
 
+  Future<void> updateUser({
+    required String name,
+    required String email,
+    required String gender,
+    required String dateOfBirth,
+    required int height,
+    required int weight,
+  }) async {
+    final response = await _client.post(
+      Endpoint.updateUser,
+      options: NetworkingUtil.setupNetworkOptions(
+          'Bearer ${_local.read(LocalDataKey.token)}'),
+      data: {
+        "name": name,
+        "email": email,
+        "gender": gender,
+        "date_of_birth": dateOfBirth,
+        "height": height,
+        "weight": weight,
+        "_method": "PUT",
+      },
+    );
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      final errorResponse = ErrorResponseModel.fromJson(response.data);
+      throw DioException(
+        requestOptions: response.requestOptions,
+        response: response,
+        error: jsonEncode(errorResponse),
+      );
+    }
+  }
+
   /*
     This Function is used as challenge tester
     DO NOT modify this function

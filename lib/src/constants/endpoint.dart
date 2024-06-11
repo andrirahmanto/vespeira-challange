@@ -3,6 +3,7 @@ class Endpoint {
 
   static const signin = '$baseUrl/sign-in';
   static const signout = '$baseUrl/sign-out';
+  static const updateUser = '$baseUrl/user/profile';
   static const getUser = '/user';
 
   static const getProductList = '/product';
