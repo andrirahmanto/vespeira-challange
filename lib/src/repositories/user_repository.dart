@@ -72,6 +72,14 @@ class UserRepository {
     return _local.read(LocalDataKey.token) != null;
   }
 
+  bool isBoardingPassed() {
+    return _local.read(LocalDataKey.isBoarding) != null;
+  }
+
+  void boardingPassed() {
+    _local.write(LocalDataKey.isBoarding, true);
+  }
+
   Future<UserResponseModel> getUser() async {
     try {
       final responseJson = await _client.get(
