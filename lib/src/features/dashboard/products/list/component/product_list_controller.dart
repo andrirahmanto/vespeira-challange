@@ -1,3 +1,4 @@
+import 'package:entrance_test/app/routes/route_name.dart';
 import 'package:entrance_test/src/features/dashboard/favorites/list/component/favorite_list_controller.dart';
 import 'package:entrance_test/src/repositories/favorite_product_repository.dart';
 import 'package:flutter/material.dart';
@@ -108,7 +109,7 @@ class ProductListController extends GetxController {
   }
 
   void toProductDetail(ProductModel product) async {
-    //TODO: finish this implementation by creating product detail page & calling it here
+    Get.toNamed(RouteName.productDetail);
   }
 
   void syncFavoriteProduct() {
