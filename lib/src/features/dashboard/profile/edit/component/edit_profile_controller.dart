@@ -3,6 +3,7 @@ import 'package:entrance_test/src/repositories/user_repository.dart';
 import 'package:entrance_test/src/utils/string_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../../utils/date_util.dart';
 import '../../../../../utils/networking_util.dart';
@@ -68,6 +69,8 @@ class EditProfileController extends GetxController {
 
   String get errorBirthDate => _errorBirthDate.value;
 
+  final ImagePicker _picker = ImagePicker();
+
   @override
   void onInit() {
     super.onInit();
@@ -112,8 +115,32 @@ class EditProfileController extends GetxController {
     }
   }
 
-  void changeImage() async {
-    //TODO: Implement change profile image
+  Future<void> changeImage(ImageSource source) async {
+    final XFile? selectedImage = await _picker.pickImage(source: source);
+    if (selectedImage != null) {
+      _isLoading.value = true;
+      await _userRepository.updateUser(
+        name: etFullName.text,
+        email: etEmail.text,
+        gender: gender,
+        dateOfBirth: DateUtil.changeFormatToShort(etBirthDate.text),
+        height: int.parse(etHeight.text),
+        weight: int.parse(etWeight.text),
+        profilePicture: selectedImage,
+      );
+      SnackbarWidget.showSuccessSnackbar('Berhasil update data');
+      loadUserFromServer();
+      Get.find<ProfileController>().loadUserFromServer();
+      _isLoading.value = false;
+    }
+  }
+
+  void onGalleryTap() async {
+    await changeImage(ImageSource.gallery);
+  }
+
+  void onCameraTap() async {
+    await changeImage(ImageSource.camera);
   }
 
   void onChangeGender(bool isFemale) {
@@ -203,7 +230,7 @@ class EditProfileController extends GetxController {
         errorBirthDate.isNullOrEmpty;
   }
 
-  void saveData() async {
+  Future<void> saveData() async {
     _isLoading.value = true;
     await _userRepository.updateUser(
       name: etFullName.text,

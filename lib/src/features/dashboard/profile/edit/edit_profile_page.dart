@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:entrance_test/src/constants/image.dart';
 import 'package:entrance_test/src/utils/string_ext.dart';
+import 'package:entrance_test/src/widgets/snackbar_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,7 +44,12 @@ class EditProfilePage extends GetView<EditProfileController> {
                 const SizedBox(height: 24),
                 InkWell(
                   onTap: () {
-                    controller.changeImage();
+                    if (!controller.isDataValid()) {
+                      SnackbarWidget.showFailedSnackbar(
+                          'Pastikan data lainnya sudah valid');
+                      return;
+                    }
+                    showImageSourceChoice(context);
                   },
                   child: SizedBox(
                     width: 100,
@@ -586,4 +592,35 @@ class EditProfilePage extends GetView<EditProfileController> {
               ),
             )),
       );
+
+  void showImageSourceChoice(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.photo_library),
+                title: Text('Gallery'),
+                onTap: () {
+                  controller.onGalleryTap();
+                  Get.back();
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.photo_camera),
+                title: Text('Camera'),
+                onTap: () {
+                  controller.onCameraTap();
+                  Get.back();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 }

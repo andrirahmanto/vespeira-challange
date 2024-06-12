@@ -5,8 +5,9 @@ import 'package:entrance_test/app/routes/route_name.dart';
 import 'package:entrance_test/src/constants/local_data_key.dart';
 import 'package:entrance_test/src/models/response/error_response_model.dart';
 import 'package:entrance_test/src/models/response/login_response_model.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:get_storage/get_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../constants/endpoint.dart';
 import '../models/response/user_response_model.dart';
@@ -101,20 +102,26 @@ class UserRepository {
     required String dateOfBirth,
     required int height,
     required int weight,
+    XFile? profilePicture,
   }) async {
+    var formData = FormData.fromMap({
+      "name": name,
+      "email": email,
+      "gender": gender,
+      "date_of_birth": dateOfBirth,
+      "height": height,
+      "weight": weight,
+      "_method": "PUT",
+    });
+    if (profilePicture != null) {
+      final image = await MultipartFile.fromFile(profilePicture.path);
+      formData.files.add(MapEntry('profile_picture', image));
+    }
     final response = await _client.post(
       Endpoint.updateUser,
       options: NetworkingUtil.setupNetworkOptions(
           'Bearer ${_local.read(LocalDataKey.token)}'),
-      data: {
-        "name": name,
-        "email": email,
-        "gender": gender,
-        "date_of_birth": dateOfBirth,
-        "height": height,
-        "weight": weight,
-        "_method": "PUT",
-      },
+      data: formData,
     );
     if (response.statusCode == 200) {
       return;
