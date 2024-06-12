@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ButtonIcon extends StatelessWidget {
-  const ButtonIcon({
+class ButtonText extends StatelessWidget {
+  const ButtonText({
     Key? key,
     this.buttonColor,
     this.borderColor,
     this.textColor,
-    this.iconSource,
-    this.icon,
-    this.iconSize,
     required this.onClick,
     required this.textLabel,
     this.side,
@@ -17,16 +14,13 @@ class ButtonIcon extends StatelessWidget {
   final Color? buttonColor;
   final Color? borderColor;
   final Color? textColor;
-  final String? iconSource;
-  final IconData? icon;
-  final double? iconSize;
   final Function onClick;
   final String textLabel;
   final BorderSide? side;
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
+    return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: buttonColor,
         shape: borderColor != null
@@ -44,21 +38,15 @@ class ButtonIcon extends StatelessWidget {
       onPressed: () {
         onClick();
       },
-      icon: (iconSource != null)
-          ? Image.asset(
-              iconSource ?? "",
-              height: iconSize ?? 24,
-              width: iconSize ?? 24,
-            )
-          : icon != null
-              ? Icon(icon, size: iconSize ?? 24)
-              : const SizedBox.shrink(),
-      label: Text(
-        textLabel,
-        style: TextStyle(
-          fontSize: 14,
-          color: textColor,
-          fontWeight: FontWeight.w600,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Text(
+          textLabel,
+          style: TextStyle(
+            fontSize: 14,
+            color: textColor,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );

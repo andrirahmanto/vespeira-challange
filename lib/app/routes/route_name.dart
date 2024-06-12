@@ -1,5 +1,6 @@
 abstract class RouteName {
   static const splashScreen = '/splashScreen';
+  static const boarding = '/boarding';
   static const login = '/login';
   static const dashboard = "/dashboard";
 

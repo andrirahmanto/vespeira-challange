@@ -18,7 +18,7 @@ class SplashController extends GetxController {
     appVersion.value = packageInfo.version;
     await Future.delayed(const Duration(seconds: 3), () {});
     if (_userRepository.isTokenExist()) {
-      Get.offNamed(RouteName.dashboard);
+      Get.offNamed(RouteName.boarding);
     } else {
       Get.offNamed(RouteName.login);
     }
