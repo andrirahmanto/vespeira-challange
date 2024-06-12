@@ -230,8 +230,16 @@ class LoginPage extends GetView<LoginController> {
                             padding: const EdgeInsets.only(right: 14),
                             child: IconButton(
                               icon: controller.isObscure.value
-                                  ? const Icon(Icons.visibility_off)
-                                  : const Icon(Icons.visibility),
+                                  ? Image.asset(
+                                      ic_visibility_off,
+                                      height: 24,
+                                      width: 24,
+                                    )
+                                  : Image.asset(
+                                      ic_visibility,
+                                      height: 24,
+                                      width: 24,
+                                    ),
                               onPressed: () {
                                 controller.togglePasswordVisibility();
                               },

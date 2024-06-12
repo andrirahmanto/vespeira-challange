@@ -1,4 +1,3 @@
-
 const ic_password = 'assets/icons/icon-password.png';
 
 const ic_home = 'assets/icons/icon-home.png';
@@ -19,7 +18,11 @@ const ic_user = 'assets/icons/icon-user.png';
 const ic_mail = 'assets/icons/icon-mail.png';
 const ic_calendar = 'assets/icons/icon-calendar.png';
 
+const ic_visibility_off = 'assets/icons/icon-visibility-off.png';
+const ic_visibility = 'assets/icons/icon-visibility.png';
+
 const ic_empty_data = 'assets/icons/icon-empty-data.png';
 const ic_error_image = 'assets/icons/icon-error-image.png';
 const ic_favorite_empty = 'assets/icons/icon-favorite-empty.png';
 const ic_favorite_filled = 'assets/icons/icon-favorite-filled.png';
+const ic_favorite_primary = 'assets/icons/icon-favorite-primary.png';

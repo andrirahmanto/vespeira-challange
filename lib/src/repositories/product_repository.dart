@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:entrance_test/app/routes/route_name.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:realm/realm.dart';
 
 import '../constants/endpoint.dart';
 import '../constants/local_data_key.dart';

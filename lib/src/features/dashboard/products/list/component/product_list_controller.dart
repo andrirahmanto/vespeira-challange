@@ -1,3 +1,5 @@
+import 'package:entrance_test/src/features/dashboard/favorites/list/component/favorite_list_controller.dart';
+import 'package:entrance_test/src/repositories/favorite_product_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,10 +11,13 @@ import '../../../../../widgets/snackbar_widget.dart';
 
 class ProductListController extends GetxController {
   final ProductRepository _productRepository;
+  final FavoriteProductRepository _favProductRepository;
 
   ProductListController({
     required ProductRepository productRepository,
-  }) : _productRepository = productRepository;
+    required FavoriteProductRepository favProductRepository,
+  })  : _productRepository = productRepository,
+        _favProductRepository = favProductRepository;
 
   final _products = Rx<List<ProductModel>>([]);
 
@@ -46,7 +51,7 @@ class ProductListController extends GetxController {
   final scrollController = ScrollController();
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
@@ -54,11 +59,12 @@ class ProductListController extends GetxController {
         getMoreProducts();
       }
     });
-    getProducts();
+    await getProducts();
+    syncFavoriteProduct();
   }
 
   //first load or after refresh.
-  void getProducts() async {
+  Future<void> getProducts() async {
     _isLoadingRetrieveProduct.value = true;
     _skip = 0;
     try {
@@ -93,6 +99,7 @@ class ProductListController extends GetxController {
       _products.refresh();
       _isLastPageProduct.value = productList.data.length < _limit;
       _skip = products.length;
+      syncFavoriteProduct();
     } catch (error) {
       SnackbarWidget.showFailedSnackbar(NetworkingUtil.errorMessage(error));
     }
@@ -104,7 +111,22 @@ class ProductListController extends GetxController {
     //TODO: finish this implementation by creating product detail page & calling it here
   }
 
+  void syncFavoriteProduct() {
+    List<String> listIdFavorite = _favProductRepository.getFavoritesId();
+    for (ProductModel product in products) {
+      product.isFavorite = listIdFavorite.contains(product.id);
+    }
+    print('selesai sync');
+  }
+
   void setFavorite(ProductModel product) {
-    product.isFavorite = !product.isFavorite;
+    if (product.isFavorite) {
+      _favProductRepository.deleteProduct(product.id);
+      Get.find<FavoriteListController>().getProducts();
+    } else {
+      _favProductRepository.saveProduct(product);
+      Get.find<FavoriteListController>().getProducts();
+    }
+    syncFavoriteProduct();
   }
 }

@@ -1,7 +1,10 @@
 import 'package:ansicolor/ansicolor.dart';
 import 'package:dio/dio.dart';
+import 'package:entrance_test/src/models/favorite_product_image_model.dart';
+import 'package:entrance_test/src/models/favorite_product_model.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:realm/realm.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
 
 import '../src/constants/endpoint.dart';
@@ -19,20 +22,30 @@ class AppBinding extends Bindings {
           followRedirects: false,
         ),
       )..interceptors.addAll([
-        TalkerDioLogger(
-          settings: TalkerDioLoggerSettings(
-            printRequestHeaders: true,
-            printResponseHeaders: true,
-            printResponseMessage: true,
-            // Blue http requests logs in console
-            requestPen: AnsiPen()..blue(),
-            // Green http responses logs in console
-            responsePen: AnsiPen()..green(),
-            // Error http logs in console
-            errorPen: AnsiPen()..red(),
+          TalkerDioLogger(
+            settings: TalkerDioLoggerSettings(
+              printRequestHeaders: true,
+              printResponseHeaders: true,
+              printResponseMessage: true,
+              // Blue http requests logs in console
+              requestPen: AnsiPen()..blue(),
+              // Green http responses logs in console
+              responsePen: AnsiPen()..green(),
+              // Error http logs in console
+              errorPen: AnsiPen()..red(),
+            ),
           ),
-        ),
-      ]),
+        ]),
+      permanent: true,
+    );
+
+    Get.put<Realm>(
+      Realm(
+        Configuration.local([
+          FavoriteProductModel.schema,
+          FavoriteProductImageModel.schema,
+        ]),
+      ),
       permanent: true,
     );
   }

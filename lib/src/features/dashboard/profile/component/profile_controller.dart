@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:entrance_test/src/repositories/favorite_product_repository.dart';
 import 'package:entrance_test/src/repositories/user_repository.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
@@ -12,6 +13,7 @@ import '../../../../widgets/snackbar_widget.dart';
 
 class ProfileController extends GetxController {
   final UserRepository _userRepository;
+  final FavoriteProductRepository _favProductRepository;
 
   final isLoading = false.obs;
 
@@ -29,7 +31,9 @@ class ProfileController extends GetxController {
 
   ProfileController({
     required UserRepository userRepository,
-  }) : _userRepository = userRepository;
+    required FavoriteProductRepository favProductRepository,
+  })  : _userRepository = userRepository,
+        _favProductRepository = favProductRepository;
 
   @override
   void onInit() {
@@ -96,6 +100,7 @@ class ProfileController extends GetxController {
   void doLogout() async {
     isLoading.value = true;
     await _userRepository.logout();
+    _favProductRepository.deleteAllProducts();
     isLoading.value = false;
     Get.offAllNamed(RouteName.login);
   }
