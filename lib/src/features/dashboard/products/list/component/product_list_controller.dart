@@ -86,10 +86,7 @@ class ProductListController extends GetxController {
 
   void getMoreProducts() async {
     if (_isLastPageProduct.value || _isLoadingRetrieveMoreProduct.value) return;
-
     _isLoadingRetrieveMoreProduct.value = true;
-
-    //TODO: finish this function by calling get product list with appropriate parameters
     try {
       final productList =
           await _productRepository.getProductList(ProductListRequestModel(
@@ -117,7 +114,6 @@ class ProductListController extends GetxController {
     for (ProductModel product in products) {
       product.isFavorite = listIdFavorite.contains(product.id);
     }
-    print('selesai sync');
   }
 
   void setFavorite(ProductModel product) {

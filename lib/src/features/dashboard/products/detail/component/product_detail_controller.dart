@@ -9,7 +9,6 @@ import 'package:entrance_test/src/widgets/snackbar_widget.dart';
 import 'package:get/get.dart';
 
 class ProductDetailController extends GetxController {
-  final UserRepository _userRepository;
   final ProductRepository _productRepository;
 
   final productId = Get.arguments;
@@ -27,8 +26,7 @@ class ProductDetailController extends GetxController {
   ProductDetailController({
     required UserRepository userRepository,
     required ProductRepository productRepository,
-  })  : _userRepository = userRepository,
-        _productRepository = productRepository;
+  }) : _productRepository = productRepository;
 
   @override
   void onInit() async {

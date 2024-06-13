@@ -52,7 +52,6 @@ class FavoriteProductRepository {
         }
       },
     );
-    print('selesai delete');
   }
 
   void deleteAllProducts() {

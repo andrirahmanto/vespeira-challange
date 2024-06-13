@@ -16,7 +16,7 @@ class ProductDetailPage extends GetView<ProductDetailController> {
       backgroundColor: gray200,
       appBar: AppBar(
           backgroundColor: white,
-          title: Text(
+          title: const Text(
             'Detail Product',
             style: TextStyle(
               fontSize: 16,
@@ -42,7 +42,7 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                     Container(
                       width: double.infinity,
                       color: white,
-                      margin: EdgeInsets.only(bottom: 4),
+                      margin: const EdgeInsets.only(bottom: 4),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -63,19 +63,19 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.all(24),
+                            padding: const EdgeInsets.all(24),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   controller.productDetail.name,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black,
                                   ),
                                 ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 controller.isPriceDiscount()
                                     ? Row(
                                         crossAxisAlignment:
@@ -112,36 +112,36 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                                     : Text(
                                         controller.productDetail.price
                                             .inRupiah(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black,
                                         ),
                                       ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 Row(
                                   children: [
-                                    Image(
+                                    const Image(
                                       height: 16,
                                       width: 16,
                                       fit: BoxFit.contain,
                                       image: AssetImage(
                                           'assets/icons/icon-star.png'), // Replace with your app logo
                                     ),
-                                    SizedBox(width: 2),
+                                    const SizedBox(width: 2),
                                     Text(
                                       controller.productDetail.ratingAverage
                                           .toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
                                       ),
                                     ),
-                                    SizedBox(width: 4),
+                                    const SizedBox(width: 4),
                                     Text(
                                       '(${controller.productDetail.ratingCount} Reviews)',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
                                         color: gray600,
@@ -159,12 +159,12 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                     Container(
                       width: double.infinity,
                       color: white,
-                      padding: EdgeInsets.all(24),
-                      margin: EdgeInsets.only(bottom: 4),
+                      padding: const EdgeInsets.all(24),
+                      margin: const EdgeInsets.only(bottom: 4),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             'Product Description',
                             style: TextStyle(
                               fontSize: 16,
@@ -172,10 +172,10 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                               color: Colors.black,
                             ),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
                             controller.productDetail.description!,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
                               color: Colors.black,
@@ -188,12 +188,12 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                     Container(
                       width: double.infinity,
                       color: white,
-                      padding: EdgeInsets.all(24),
-                      margin: EdgeInsets.only(bottom: 4),
+                      padding: const EdgeInsets.all(24),
+                      margin: const EdgeInsets.only(bottom: 4),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             'Terms & Conditions of Return / Refund',
                             style: TextStyle(
                               fontSize: 16,
@@ -201,7 +201,7 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                               color: Colors.black,
                             ),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Column(
                             children: controller.productDetail.returnTerms!
                                 .split('\n')
@@ -214,7 +214,7 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                                     children: [
                                       Text(
                                         "${entry.key + 1}. ",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
                                           color: Colors.black,
@@ -223,7 +223,7 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                                       Expanded(
                                         child: Text(
                                           entry.value,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400,
                                             color: Colors.black,
@@ -244,12 +244,12 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                         : Container(
                             width: double.infinity,
                             color: white,
-                            padding: EdgeInsets.all(24),
-                            margin: EdgeInsets.only(bottom: 4),
+                            padding: const EdgeInsets.all(24),
+                            margin: const EdgeInsets.only(bottom: 4),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
+                                const Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
@@ -271,48 +271,48 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 Row(
                                   children: [
-                                    Image(
+                                    const Image(
                                       height: 20,
                                       width: 20,
                                       fit: BoxFit.contain,
                                       image: AssetImage(
                                           'assets/icons/icon-star.png'), // Replace with your app logo
                                     ),
-                                    SizedBox(width: 2),
+                                    const SizedBox(width: 2),
                                     Text(
                                       controller.productDetail.ratingAverage
                                           .toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
                                         color: Colors.black,
                                       ),
                                     ),
-                                    SizedBox(width: 4),
+                                    const SizedBox(width: 4),
                                     Text(
                                       "from ${controller.productDetail.ratingCount.toString()} rating",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w400,
                                         color: gray600,
                                       ),
                                     ),
-                                    SizedBox(width: 4),
+                                    const SizedBox(width: 4),
                                     Container(
                                       width: 4.0,
                                       height: 4.0,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         color: gray600,
                                         shape: BoxShape.circle,
                                       ),
                                     ),
-                                    SizedBox(width: 4),
+                                    const SizedBox(width: 4),
                                     Text(
                                       '${controller.ratings.length} reviews',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w400,
                                         color: gray600,
@@ -320,7 +320,7 @@ class ProductDetailPage extends GetView<ProductDetailController> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 24),
+                                const SizedBox(height: 24),
                                 ReviewCard(rating: controller.ratings[0]),
                               ],
                             ),

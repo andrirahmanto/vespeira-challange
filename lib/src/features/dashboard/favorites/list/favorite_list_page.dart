@@ -77,7 +77,7 @@ class FavoriteListPage extends GetWidget<FavoriteListController> {
           ),
           child: InkWell(
             onTap: () => {
-              // controller.toProductDetail(product),
+              controller.toProductDetail(product),
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
@@ -107,7 +107,7 @@ class FavoriteListPage extends GetWidget<FavoriteListController> {
                                     controller.removeFavoriteProduct(product.id)
                                   },
                               child: Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: Image.asset(
                                   ic_favorite_filled,
                                   width: 24,

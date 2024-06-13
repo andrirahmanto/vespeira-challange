@@ -1,11 +1,9 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:entrance_test/src/constants/color.dart';
 import 'package:entrance_test/src/features/boarding/component/boarding_controller.dart';
-import 'package:entrance_test/src/widgets/button_icon.dart';
 import 'package:entrance_test/src/widgets/button_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class BoardingPage extends GetView<BoardingController> {
   const BoardingPage({Key? key}) : super(key: key);
@@ -19,17 +17,17 @@ class BoardingPage extends GetView<BoardingController> {
             padding: const EdgeInsets.all(24),
             child: GridView.builder(
               itemCount: 9, // Total number of items in your grid
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3, // Number of items per row
                 childAspectRatio:
                     1, // This is the aspect ratio of the widgets in the grid
               ),
               itemBuilder: (context, index) {
                 return Container(
-                  margin: EdgeInsets.all(
+                  margin: const EdgeInsets.all(
                       5), // Optional: add some margin for each grid item
                   child: Container(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     height: double.infinity,
                     width: double.infinity,
                     // color: primary,
@@ -58,14 +56,14 @@ class BoardingPage extends GetView<BoardingController> {
           SizedBox(
             height: MediaQuery.of(context).size.height * 2 / 3,
             child: PageView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               controller: controller.pageContorller,
               scrollDirection: Axis.horizontal,
               children: [
                 Container(
                   width: double.infinity,
                   color: Colors.transparent,
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
@@ -77,7 +75,7 @@ class BoardingPage extends GetView<BoardingController> {
                       ),
                       SizedBox(height: 16),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        padding: EdgeInsets.symmetric(horizontal: 24),
                         child: Text(
                           'Loerm Ipsum Dolor Sit Amet Consectetur Adipiscing Elit Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua Ut Enim Ad Minim Veniam Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip Ex Ea Commodo ',
                           style: TextStyle(
@@ -93,7 +91,7 @@ class BoardingPage extends GetView<BoardingController> {
                 Container(
                   width: double.infinity,
                   color: Colors.transparent,
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
@@ -105,7 +103,7 @@ class BoardingPage extends GetView<BoardingController> {
                       ),
                       SizedBox(height: 16),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        padding: EdgeInsets.symmetric(horizontal: 24),
                         child: Text(
                           'Loerm Ipsum Dolor Sit Amet Consectetur Adipiscing Elit Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua Ut Enim Ad Minim Veniam Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip Ex Ea Commodo ',
                           style: TextStyle(
@@ -121,7 +119,7 @@ class BoardingPage extends GetView<BoardingController> {
                 Container(
                   width: double.infinity,
                   color: Colors.transparent,
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
@@ -133,7 +131,7 @@ class BoardingPage extends GetView<BoardingController> {
                       ),
                       SizedBox(height: 16),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        padding: EdgeInsets.symmetric(horizontal: 24),
                         child: Text(
                           'Loerm Ipsum Dolor Sit Amet Consectetur Adipiscing Elit Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua Ut Enim Ad Minim Veniam Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip Ex Ea Commodo ',
                           style: TextStyle(
@@ -149,7 +147,7 @@ class BoardingPage extends GetView<BoardingController> {
                 Container(
                   width: double.infinity,
                   color: Colors.transparent,
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
@@ -161,7 +159,7 @@ class BoardingPage extends GetView<BoardingController> {
                       ),
                       SizedBox(height: 16),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        padding: EdgeInsets.symmetric(horizontal: 24),
                         child: Text(
                           'Loerm Ipsum Dolor Sit Amet Consectetur Adipiscing Elit Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua Ut Enim Ad Minim Veniam Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip Ex Ea Commodo ',
                           style: TextStyle(
@@ -185,11 +183,11 @@ class BoardingPage extends GetView<BoardingController> {
                 Obx(() => DotsIndicator(
                       position: controller.stateBoarding.value,
                       dotsCount: 4, // Jumlah halaman Anda
-                      decorator: DotsDecorator(
+                      decorator: const DotsDecorator(
                         activeColor: primary, // Warna dot saat aktif
                       ),
                     )),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -203,7 +201,7 @@ class BoardingPage extends GetView<BoardingController> {
                         },
                       ),
                     ),
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                     Expanded(
                       child: Obx(() => ButtonText(
                             buttonColor: primary,

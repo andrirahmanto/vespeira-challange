@@ -1,8 +1,6 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 import '../../constants/color.dart';
 import '../../constants/icon.dart';
@@ -115,12 +113,13 @@ class LoginPage extends GetView<LoginController> {
                               ? null
                               : controller.errorPhone.value,
                           prefixIcon: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 14.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 14.0),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                SizedBox(width: 6),
+                                const SizedBox(width: 6),
                                 GestureDetector(
                                   onTap: () {
                                     showCountryPicker(
@@ -137,15 +136,15 @@ class LoginPage extends GetView<LoginController> {
                                   child: Obx(
                                     () => Text(
                                       '+${controller.etPhoneCode.value}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w600,
                                           color: gray900),
                                     ),
                                   ),
                                 ),
-                                SizedBox(width: 12),
-                                SizedBox(
+                                const SizedBox(width: 12),
+                                const SizedBox(
                                   width: 1.5,
                                   height: 48,
                                   child: DecoratedBox(

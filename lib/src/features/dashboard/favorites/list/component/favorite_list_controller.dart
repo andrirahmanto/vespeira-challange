@@ -58,7 +58,7 @@ class FavoriteListController extends GetxController {
     }
   }
 
-  void toProductDetail(ProductModel product) async {
+  void toProductDetail(FavoriteProductModel product) async {
     Get.toNamed(RouteName.productDetail, arguments: product.id);
   }
 }

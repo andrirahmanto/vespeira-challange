@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:entrance_test/src/constants/color.dart';
 import 'package:entrance_test/src/constants/image.dart';
@@ -8,7 +6,6 @@ import 'package:entrance_test/src/models/rating_model.dart';
 import 'package:entrance_test/src/utils/date_util.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ReviewCard extends StatelessWidget {
   final RatingModel rating;
@@ -17,7 +14,7 @@ class ReviewCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 24),
+      margin: const EdgeInsets.only(bottom: 24),
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,13 +42,13 @@ class ReviewCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       rating.name,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: Colors.black,
@@ -60,10 +57,10 @@ class ReviewCard extends StatelessWidget {
                     StarRating(starCount: rating.rating),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 Text(
                   DateUtil.getTimeAgo(rating.createdAt),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
                     color: gray600,
@@ -72,7 +69,7 @@ class ReviewCard extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           ExpandableText(
             rating.review,
             textAlign: TextAlign.start,
@@ -80,7 +77,7 @@ class ReviewCard extends StatelessWidget {
             collapseText: 'See Less',
             maxLines: 3,
             linkColor: primary,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 12, fontWeight: FontWeight.w400, color: Colors.black),
           ),
         ],

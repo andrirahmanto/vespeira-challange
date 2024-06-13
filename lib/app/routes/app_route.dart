@@ -48,7 +48,7 @@ class AppRoute {
     ),
     GetPage(
       name: RouteName.webView,
-      page: () => WebviewPage(),
+      page: () => const WebviewPage(),
     ),
   ];
 }
