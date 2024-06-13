@@ -17,33 +17,31 @@ class FavoriteListPage extends GetWidget<FavoriteListController> {
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
           backgroundColor: white,
-          body: Expanded(
-            child: RefreshIndicator(
-              onRefresh: () {
-                return Future.delayed(const Duration(seconds: 0), () {
-                  controller.getProducts();
-                });
-              },
-              child: Obx(
-                () => (controller.isLoadingRetrieveProduct)
-                    ? const Center(
-                        child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(primary),
-                      ))
-                    : (controller.favProducts.isEmpty)
-                        ? Stack(
-                            children: [
-                              ListView(),
-                              const Center(
-                                child: EmptyListStateWidget(
-                                  iconSource: ic_empty_data,
-                                  text: "No product to show",
-                                ),
+          body: RefreshIndicator(
+            onRefresh: () {
+              return Future.delayed(const Duration(seconds: 0), () {
+                controller.getProducts();
+              });
+            },
+            child: Obx(
+              () => (controller.isLoadingRetrieveProduct)
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(primary),
+                    ))
+                  : (controller.favProducts.isEmpty)
+                      ? Stack(
+                          children: [
+                            ListView(),
+                            const Center(
+                              child: EmptyListStateWidget(
+                                iconSource: ic_empty_data,
+                                text: "No product to show",
                               ),
-                            ],
-                          )
-                        : buildProductList(context),
-              ),
+                            ),
+                          ],
+                        )
+                      : buildProductList(context),
             ),
           ),
         ),
