@@ -109,7 +109,7 @@ class ProductListController extends GetxController {
   }
 
   void toProductDetail(ProductModel product) async {
-    Get.toNamed(RouteName.productDetail);
+    Get.toNamed(RouteName.productDetail, arguments: product.id);
   }
 
   void syncFavoriteProduct() {

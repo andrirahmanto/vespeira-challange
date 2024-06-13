@@ -7,4 +7,14 @@ class Endpoint {
   static const getUser = '/user';
 
   static const getProductList = '/product';
+  static String getProductById(String id) => '/product/$id';
+  static String getRatings({
+    required String productId,
+    int page = 1,
+    int limit = 3,
+    String sortColumn = 'created_at',
+    String sortOrder = 'desc',
+  }) {
+    return '$baseUrl/rating?page=$page&limit=$limit&sort_column=$sortColumn&sort_order=$sortOrder&product_id=$productId';
+  }
 }

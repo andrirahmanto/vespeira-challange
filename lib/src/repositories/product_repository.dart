@@ -1,13 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:entrance_test/app/routes/route_name.dart';
+import 'package:entrance_test/src/models/response/rating_list_response_model.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:realm/realm.dart';
 
 import '../constants/endpoint.dart';
 import '../constants/local_data_key.dart';
 import '../models/request/product_list_request_model.dart';
 import '../models/response/product_list_response_model.dart';
+import '../models/response/product_detail_response_model.dart';
 import '../utils/networking_util.dart';
 
 class ProductRepository {
@@ -42,6 +43,35 @@ class ProductRepository {
             'Bearer ${_local.read(LocalDataKey.token)}'),
       );
       return ProductListResponseModel.fromJson(responseJson.data);
+    } on DioError catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<ProductDetailResponseModel> getProductDetail(String productId) async {
+    try {
+      String endpoint = Endpoint.getProductById(productId);
+      final responseJson = await _client.get(
+        endpoint,
+        options: NetworkingUtil.setupNetworkOptions(
+            'Bearer ${_local.read(LocalDataKey.token)}'),
+      );
+      return ProductDetailResponseModel.fromJson(responseJson.data);
+    } on DioError catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<RatingListResponseModel> getRatingListByProduct(
+      String productId) async {
+    try {
+      String endpoint = Endpoint.getRatings(productId: productId);
+      final responseJson = await _client.get(
+        endpoint,
+        options: NetworkingUtil.setupNetworkOptions(
+            'Bearer ${_local.read(LocalDataKey.token)}'),
+      );
+      return RatingListResponseModel.fromJson(responseJson.data);
     } on DioError catch (_) {
       rethrow;
     }

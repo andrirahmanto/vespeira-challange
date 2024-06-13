@@ -4,12 +4,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:entrance_test/src/constants/color.dart';
 import 'package:entrance_test/src/constants/image.dart';
 import 'package:entrance_test/src/features/dashboard/products/detail/star_rating.dart';
+import 'package:entrance_test/src/models/rating_model.dart';
+import 'package:entrance_test/src/utils/date_util.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ReviewCard extends StatelessWidget {
-  const ReviewCard({super.key});
+  final RatingModel rating;
+  const ReviewCard({Key? key, required this.rating}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +20,7 @@ class ReviewCard extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 24),
       width: double.infinity,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
             child: Row(
@@ -26,8 +30,18 @@ class ReviewCard extends StatelessWidget {
                   width: 40,
                   height: 40,
                   child: ClipOval(
-                    child: Image(
-                      image: AssetImage(defaultProfileImage),
+                    child: AspectRatio(
+                      aspectRatio: 1 / 1,
+                      child: CachedNetworkImage(
+                        width: 100,
+                        height: 100,
+                        imageUrl: rating.profilePicture,
+                        fit: BoxFit.cover,
+                        errorWidget: (context, url, error) => Image.asset(
+                          defaultProfileImage,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -36,19 +50,19 @@ class ReviewCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Amanda Zahra',
+                      rating.name,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: Colors.black,
                       ),
                     ),
-                    StarRating(starCount: 4),
+                    StarRating(starCount: rating.rating),
                   ],
                 ),
                 Spacer(),
                 Text(
-                  '1 days ago',
+                  DateUtil.getTimeAgo(rating.createdAt),
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
@@ -60,7 +74,8 @@ class ReviewCard extends StatelessWidget {
           ),
           SizedBox(height: 12),
           ExpandableText(
-            'Produk skincare ini sangat membantu menjaga kondisi kulit saya tetap sehat dan terhidrasi sepanjang hari. Saya sangat merekomendasikan produk ini kepada ...',
+            rating.review,
+            textAlign: TextAlign.start,
             expandText: 'See More',
             collapseText: 'See Less',
             maxLines: 3,
